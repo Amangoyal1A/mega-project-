@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "index.js",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "validate": "npm-run-all check-types test check-formats lint build"
   },
   "author": "",
   "license": "ISC",
@@ -14,14 +15,19 @@
     "cloudinary": "^1.37.3",
     "cookie": "^0.5.0",
     "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
     "crypto": "^1.0.1",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
+    "express-fileupload": "^1.4.0",
     "jsonwebtoken": "^9.0.1",
     "mongoose": "^7.3.2",
+    "node-cron": "^3.0.2",
     "nodemailer": "^6.9.3",
+    "nodemon": "^3.0.1",
     "otp-generator": "^4.0.1",
     "razorpay": "^2.9.0",
-    "shortid": "^2.2.16"
+    "shortid": "^2.2.16",
+    "validate": "^5.2.0"
   }
 }

@@ -15,7 +15,10 @@ async function updateProfile(req, res) {
       });
     }
 
-    const user = await User.findById({ Userid });
+console.log("line number 18",Userid)
+    const user = await User.findById({_id:Userid });
+
+    console.log("user",user)
 
     if (!user) {
       return res.status(400).json({
@@ -25,7 +28,8 @@ async function updateProfile(req, res) {
     }
 
     const profileId = user.additionalDeatils;
-    const profileUpdatedDetails = await Profile.findById({ profileId });
+    console.log("31",profileId.toString())
+    const profileUpdatedDetails = await Profile.findById({ _id:profileId });
 
     profileUpdatedDetails.gender = gender;
 
@@ -44,6 +48,7 @@ async function updateProfile(req, res) {
     return res.status(500).json({
       success: false,
       Message: "Error while creating profile",
+      err:error
     });
   }
 }
@@ -85,3 +90,11 @@ async function DeleteProfile(req, res) {
     });
   }
 }
+
+
+
+
+module.exports = {
+  updateProfile,
+  DeleteProfile,
+};

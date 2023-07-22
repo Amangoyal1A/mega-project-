@@ -1,4 +1,4 @@
-const JWT = require("jwt");
+const JWT = require("jsonwebtoken");
 require("dotenv").config();
 const userModel = require("../models/User");
 
@@ -100,3 +100,10 @@ async function isInstructor(req, res, next) {
     });
   }
 }
+
+module.exports = {
+  auth,
+  isStudent,
+  isAdmin,
+  isInstructor,
+};

@@ -14,9 +14,11 @@ async function sendOtp(req, res) {
     //fetch email
     const { email } = req.body;
 
+    console.log(email);
+
     //check user already exists or not
 
-    const user = User.findOne({ email });
+    const user = await User.findOne({ email });
 
     if (user) {
       res.status(400).json({
@@ -33,7 +35,7 @@ async function sendOtp(req, res) {
 
     console.log(otp);
 
-    let result = OtpModel.findOne({ otp });
+    let result = await OtpModel.findOne({ otp });
 
     while (result) {
       otp = otpGenerator.generate(6, {
@@ -47,9 +49,9 @@ async function sendOtp(req, res) {
 
     let otpPayload = { email, otp };
 
-    const otpBody = OtpModel.create(otpPayload);
+    const otpBody = await OtpModel.create(otpPayload);
 
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       message: "Otp sent Successfully",
       otp,
@@ -147,7 +149,7 @@ async function signup(req, res) {
       !email ||
       !password ||
       !confirmPassword ||
-      !contactNumber ||
+      // !contactNumber ||
       !otp
     ) {
       return res.status(400).json({
@@ -176,14 +178,19 @@ async function signup(req, res) {
     }
 
     //find most recent otp
-    const recentOtp = OtpModel.find({ email }).sort({ createdAt: -1 }).limit(1);
+    const recentOtp = await OtpModel.find({ email }).sort({ _id: -1 }).limit(1);
+
+    console.log("recentotp", recentOtp);
+    console.log(recentOtp[0].otp, "recentotp");
+    console.log(otp, "req otp");
+
     //validate otp
     if (recentOtp.length === 0) {
       return res.status(400).json({
         success: false,
         message: "Otp not found",
       });
-    } else if (recentOtp.otp !== otp) {
+    } else if (recentOtp[0].otp !== otp) {
       return res.status(400).json({
         success: false,
         message: "Invalid otp",
@@ -217,7 +224,7 @@ async function signup(req, res) {
     return res.status(200).json({
       success: true,
       message: "Signup Successfully",
-      user,
+      users,
     });
   } catch (error) {
     console.log("Error while Signup", error);
@@ -240,12 +247,19 @@ async function login(req, res) {
       });
     }
 
-    const user = User.findOne({ email }).populate("additionalDeatils");
+    const user = await User.findOne({ email }).populate("additionalDeatils");
 
     if (!user) {
       return res.status(400).json({
         success: false,
         message: "User not Registred,please signup",
+      });
+    }
+
+    if (!(await bcrypt.compare(password, user.password))) {
+      return res.status(400).json({
+        success: false,
+        message: "Password not matched",
       });
     }
 
@@ -296,7 +310,11 @@ async function login(req, res) {
 
 //changePassword
 
+async function changePassword() {}
 
-async function changePassword(){
-   
-}
+module.exports = {
+  changePassword,
+  login,
+  sendOtp,
+  signup,
+};

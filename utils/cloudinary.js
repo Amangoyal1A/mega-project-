@@ -12,6 +12,7 @@ async function uploadImageToCloudinary(file, folder, height, quality) {
   };
 
   const result = await cloudinary.uploader.upload(file.tempFilePath, options);
+  console.log("cloudinary result::",result)
   return result;
 }
 

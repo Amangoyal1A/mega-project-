@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 require("dotenv").config();
 
-function dbConnection() {
+async function dbConnection() {
   mongoose
     .connect(process.env.MONGO_URL, {
       useNewUrlParser: true,
@@ -13,3 +13,5 @@ function dbConnection() {
       process.exit(1);
     });
 }
+
+module.exports = {dbConnection}

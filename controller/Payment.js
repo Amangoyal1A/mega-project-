@@ -152,3 +152,8 @@ async function verifySignature(req, res) {
     });
   }
 }
+
+
+module.exports ={
+  capturePayment,verifySignature
+}

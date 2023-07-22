@@ -2,6 +2,7 @@ const UserModel = require("../models/User");
 
 const mailSender = require("../utils/mailSender");
 const bcrypt = require("bcrypt");
+const crypto = require("crypto");
 
 //resetPasswordToken
 
@@ -33,19 +34,19 @@ async function resetPasswordToken(req, res) {
     await mailSender(
       email,
       "Password reset Link",
-      `
-  password resetlink is here ${urlLink}
-  `
+      `password resetlink is here ${urlLink}`
     );
 
     return res.status(200).json({
       success: true,
       message: "mail sent",
+      data: updatedDetails,
     });
   } catch (error) {
     return res.status(500).json({
       success: true,
       message: "Error occured while sending mail for resetpassword",
+      err: error.message,
     });
   }
 }
@@ -55,6 +56,15 @@ async function resetPasswordToken(req, res) {
 async function resetPassword(req, res) {
   try {
     const { password, confirmPassword, token } = req.body;
+
+
+    if(!password|| !confirmPassword||!token)
+    {
+      return res.status(401).json({
+        success: false,
+        message: "Required fields is not present",
+      });
+    }
 
     if (password !== confirmPassword) {
       return res.status(401).json({
@@ -96,6 +106,12 @@ async function resetPassword(req, res) {
     return res.status(500).json({
       success: false,
       message: "Error while reset password",
+      err:error.message
     });
   }
 }
+
+module.exports = {
+  resetPasswordToken,
+  resetPassword,
+};
