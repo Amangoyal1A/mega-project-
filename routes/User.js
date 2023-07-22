@@ -19,6 +19,7 @@ const {
   isAdmin,
   isInstructor,
 } = require("../middleware/authMiddleware");
+const { createCategory, showAllCategory } = require("../controller/Category");
 
 // Authentication Routes
 userRouter.post("/signup", signup);
@@ -30,5 +31,10 @@ userRouter.post("/sendotp", sendOtp);
 // Reset Password Routes
 userRouter.post("/reset-password-token", resetPasswordToken);
 userRouter.post("/reset-password", resetPassword);
+
+//admin routes
+userRouter.post("/createcategory",auth,isAdmin,createCategory)
+userRouter.get("/showallcategory",auth,isAdmin,showAllCategory)
+
 
 module.exports = { userRouter };

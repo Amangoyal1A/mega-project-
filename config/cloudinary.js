@@ -10,12 +10,6 @@ const cloudinary = require("cloudinary").v2;
       api_secret: process.env.SECRET,
     });
 
-    if(connect)
-    {
-      console.log("cloudinary connected",connect)
-    }
-
-
   } catch (error) {
     console.log(error)
   }

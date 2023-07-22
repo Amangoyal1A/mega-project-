@@ -14,8 +14,6 @@ async function sendOtp(req, res) {
     //fetch email
     const { email } = req.body;
 
-    console.log(email);
-
     //check user already exists or not
 
     const user = await User.findOne({ email });
@@ -179,10 +177,6 @@ async function signup(req, res) {
 
     //find most recent otp
     const recentOtp = await OtpModel.find({ email }).sort({ _id: -1 }).limit(1);
-
-    console.log("recentotp", recentOtp);
-    console.log(recentOtp[0].otp, "recentotp");
-    console.log(otp, "req otp");
 
     //validate otp
     if (recentOtp.length === 0) {

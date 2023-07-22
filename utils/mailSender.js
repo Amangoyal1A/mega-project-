@@ -1,8 +1,6 @@
-require("dotenv").config(); // Load environment variables from .env file
+require("dotenv").config(); 
 
 const nodemailer = require("nodemailer");
-
-console.log(process.env.MAIL_HOST)
 
 async function mailSender(email, title, body) {
   try {

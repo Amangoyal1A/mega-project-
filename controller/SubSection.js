@@ -29,7 +29,7 @@ async function createSubSection(req, res) {
     });
 
     const SectionUpdated = await Section.findByIdAndUpdate(
-      { sectionId },
+      { _id:sectionId },
       {
         $push: {
           subSection: SubsectionDetails._id,
@@ -38,7 +38,7 @@ async function createSubSection(req, res) {
       {
         new: true,
       }
-    ).populate("SubSection");
+    ).populate("subSection");
 
     return res.status(200).json({
       success: true,
@@ -51,4 +51,9 @@ async function createSubSection(req, res) {
       error: error.message,
     });
   }
+}
+
+
+module.exports ={
+  createSubSection
 }

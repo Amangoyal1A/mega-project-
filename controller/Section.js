@@ -17,7 +17,7 @@ async function createSection(req, res) {
 
     const updatedCourseDetails = await Course.findByIdAndUpdate(
       {
-        courseId,
+        _id:courseId,
       },
       {
         $push: {
@@ -95,7 +95,7 @@ async function getAllSections(req, res) {
   }
 }
 
-async function DeleteSection(req, res) {
+async function deleteSection(req, res) {
   try {
     const { sectionId } = req.params;
 
@@ -111,4 +111,9 @@ async function DeleteSection(req, res) {
       err: error.message,
     });
   }
+}
+
+
+module.exports ={
+  createSection,updateSection,getAllSections,deleteSection
 }

@@ -37,7 +37,7 @@ const userSchema = new mongoose.Schema({
   resetPasswordExpired: {
     type: Date,
   },
-  coures: [
+  course: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Course",
