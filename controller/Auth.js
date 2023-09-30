@@ -241,7 +241,7 @@ async function login(req, res) {
       });
     }
 
-    const user = await User.findOne({ email }).populate("additionalDeatils");
+    const user = await User.findOne({ email }).populate("additionalDetails");
 
     if (!user) {
       return res.status(400).json({

@@ -21,20 +21,32 @@ const {
 } = require("../middleware/authMiddleware");
 const { createCategory, showAllCategory } = require("../controller/Category");
 
-// Authentication Routes
-userRouter.post("/signup", signup);
+// Routes for Login, Signup, and Authentication
+
+// ********************************************************************************************************
+//                                      Authentication routes
+// ********************************************************************************************************
+
+// Route for user login
 userRouter.post("/login", login);
-userRouter.post("/changepassword", auth, changePassword);
+
+// Route for user signup
+userRouter.post("/signup", signup);
+
+// Route for sending OTP to the user's email
 userRouter.post("/sendotp", sendOtp);
 
+// Route for Changing the password
+userRouter.post("/changepassword", auth, changePassword);
 
-// Reset Password Routes
+// ********************************************************************************************************
+//                                      Reset Password
+// ********************************************************************************************************
+
+// Route for generating a reset password token
 userRouter.post("/reset-password-token", resetPasswordToken);
+
+// Route for resetting user's password after verification
 userRouter.post("/reset-password", resetPassword);
-
-//admin routes
-userRouter.post("/createcategory",auth,isAdmin,createCategory)
-userRouter.get("/showallcategory",auth,isAdmin,showAllCategory)
-
 
 module.exports = { userRouter };

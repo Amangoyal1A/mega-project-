@@ -18,6 +18,7 @@ async function createCourse(req, res) {
       price,
       tag,
       categoryId,
+      status
     } = req.body;
 
     //get thumbnail
@@ -29,7 +30,8 @@ async function createCourse(req, res) {
       !courseDescription ||
       !whatYouWillLearn ||
       !price ||
-      !tag
+      !tag ||
+      !status
     ) {
       return res.status(400).json({
         success: false,

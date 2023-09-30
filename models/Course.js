@@ -58,6 +58,7 @@ const CourseSchema = new mongoose.Schema({
   status: {
     type: String,
     enum: ["Draft", "Published"],
+    default: "Published" // Set the default value to "Published"
   },
 });
 
